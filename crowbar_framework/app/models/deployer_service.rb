@@ -172,8 +172,11 @@ class DeployerService < ServiceObject
       # Walk map to categorize the node.  Choose first one from the bios map that matches.
       role = RoleObject.find_role_by_name "deployer-config-#{inst}"
       done = false
+      @logger.info("Deciding what BIOS and RAID config to use:")
+      @logger.info("#{roles.inspect}")
       role.default_attributes["deployer"]["bios_map"].each do |match|
         roles.each do |r|
+          @logger.info("Seeing if #{r.inspect} matches #{match.inspect}")
           if r =~ /#{match["pattern"]}/
             node.crowbar["crowbar"]["hardware"] = {} if node.crowbar["crowbar"]["hardware"].nil? 
             node.crowbar["crowbar"]["hardware"]["bios_set"] = match["bios_set"] if node.crowbar["crowbar"]["hardware"]["bios_set"].nil?
