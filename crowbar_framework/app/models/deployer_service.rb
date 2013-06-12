@@ -181,7 +181,7 @@ class DeployerService < ServiceObject
             node.crowbar["crowbar"]["hardware"]["bios_set"] = match["bios_set"] if node.crowbar["crowbar"]["hardware"]["bios_set"].nil?
             node.crowbar["crowbar"]["hardware"]["raid_set"] = match["raid_set"] if node.crowbar["crowbar"]["hardware"]["raid_set"].nil?
             done = true
-            @logger.info("#{r.inspect} matched #{mach.inspect}")
+            @logger.info("#{r.inspect} matched #{match.inspect}")
             break
           end
         end 
