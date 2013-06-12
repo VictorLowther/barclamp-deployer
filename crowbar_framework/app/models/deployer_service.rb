@@ -173,7 +173,6 @@ class DeployerService < ServiceObject
       role = RoleObject.find_role_by_name "deployer-config-#{inst}"
       done = false
       @logger.info("Deciding what BIOS and RAID config to use:")
-      @logger.info("#{roles.inspect}")
       role.default_attributes["deployer"]["bios_map"].each do |match|
         roles.each do |r|
           @logger.info("Seeing if #{r.inspect} matches #{match.inspect}")
@@ -182,6 +181,7 @@ class DeployerService < ServiceObject
             node.crowbar["crowbar"]["hardware"]["bios_set"] = match["bios_set"] if node.crowbar["crowbar"]["hardware"]["bios_set"].nil?
             node.crowbar["crowbar"]["hardware"]["raid_set"] = match["raid_set"] if node.crowbar["crowbar"]["hardware"]["raid_set"].nil?
             done = true
+            @logger.info("#{r.inspect} matched #{mach.inspect}")
             break
           end
         end 
